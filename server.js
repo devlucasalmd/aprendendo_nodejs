@@ -1,17 +1,36 @@
-const express = require('express')
+const handlebars = require('express-handlebars')
 
+const express = require('express')
 let app = express()
 
+app.use(express.json())
+app.use(express.urlencoded({ extended: true}))
+
+app.engine('handlebars', handlebars({defaultLayout: 'main'}))
+app.set('view engine', 'handlebars')
+
+
+const usuarios = [
+
+]
+
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.json(usuarios)
 })
 
-app.get('/cadastro', (req, res) => {
-    res.send('Tela de cadastro')
+app.get('/usuarios', (req, res) => {
+    res.render('usuarios')    
+    console.log(req.body)
 })
 
-app.get('/perfil', (req, res) => {
-    res.send('Perfil de usuario')
+app.post('/usuarios', (req, res) => {
+    usuarios.push(req.body)
+    res.json({status: 'Usuario criado com sucesso'})
+})
+
+app.delete('/usuarios', (req, res) => {
+    usuarios.pop(req.body)
+    res.json({status: 'Usuario deletado com sucesso'})
 })
 
 app.listen(8000, () => {
