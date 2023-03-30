@@ -6,7 +6,7 @@ let app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true}))
 
-app.engine('handlebars', handlebars({defaultLayout: 'main'}))
+app.engine('handlebars', handlebars.engine({defaultLayout: 'main'}))
 app.set('view engine', 'handlebars')
 
 
@@ -24,8 +24,9 @@ app.get('/usuarios', (req, res) => {
 })
 
 app.post('/usuarios', (req, res) => {
+    res.send("Nome: " + req.body.nome + "\nEmail: " + req.body.email)
     usuarios.push(req.body)
-    res.json({status: 'Usuario criado com sucesso'})
+    //res.json({status: 'Usuario criado com sucesso'})
 })
 
 app.delete('/usuarios', (req, res) => {
