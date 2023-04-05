@@ -10,25 +10,28 @@ app.engine('handlebars', handlebars.engine({defaultLayout: 'main'}))
 app.set('view engine', 'handlebars')
 
 
-const usuarios = [
+const usuarios = []
 
-]
-
+//Mostrar lista de usuarios
 app.get('/', (req, res) => {
     res.json(usuarios)
 })
 
+
+//Mostrar usuario criado
 app.get('/usuarios', (req, res) => {
     res.render('usuarios')    
     console.log(req.body)
 })
 
+//Inserir usuario
 app.post('/usuarios', (req, res) => {
     res.send("Nome: " + req.body.nome + "\nEmail: " + req.body.email)
     usuarios.push(req.body)
     //res.json({status: 'Usuario criado com sucesso'})
 })
 
+//Deletar usuario
 app.delete('/usuarios', (req, res) => {
     usuarios.pop(req.body)
     res.json({status: 'Usuario deletado com sucesso'})
